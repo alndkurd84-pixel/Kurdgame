@@ -39,7 +39,6 @@
     font-size: 14px;
     color: #00ffd5;
   }
-  /* تنسيق الزر ومربع الاختيار ليكون شكلها جميل ومرتب */
   .controls {
     margin-top: 15px;
   }
@@ -71,13 +70,10 @@
   }
 </style>
 <script>
-  // دوال وهمية لمنع ظهور أخطاء مفقودة من ملفات الـ JS الأخرى
   function undefinedFunction() {}
   window.undefinedFunction = window.undefinedFunction || function() {};
 
-  // دالة تشغيل الثغرة
   function startExploit() {
-    // إخفاء الزر وخيارات التحكم عند بدء الثغرة لتبدو الصفحة نظيفة
     var controls = document.getElementById('controls-div');
     if (controls) controls.style.display = 'none';
     
@@ -90,24 +86,27 @@
   }
 
   window.onload = function () {
-    // التحقق هل المستخدم مفعل خيار التشغيل التلقائي سابقاً
     var autoRun = localStorage.getItem('autoExploit');
     var checkbox = document.getElementById('autoCheck');
 
     if (autoRun === 'true') {
       if (checkbox) checkbox.checked = true;
-      // تشغيل تلقائي بعد نصف ثانية
       setTimeout(startExploit, 500);
     }
   };
 
-  // دالة حفظ حالة مربع الاختيار
   function toggleAuto(element) {
     if (element.checked) {
       localStorage.setItem('autoExploit', 'true');
     } else {
       localStorage.setItem('autoExploit', 'false');
     }
+  }
+
+  // زر إضافي صغير لإعادة تعيين الإعدادات وإظهار الأزرار لو اختفت
+  function resetSettings() {
+    localStorage.clear();
+    location.reload();
   }
 </script>
 </head>
@@ -119,7 +118,6 @@
     <img src="IMG_1582.png" alt="Host Image">
   </div>
 
-  <!-- الأزرار وخيارات التشغيل اليدوي أو التلقائي -->
   <div id="controls-div" class="controls">
     <button onclick="startExploit()">Run Exploit</button>
     <div class="checkbox-container">
@@ -127,6 +125,8 @@
         <input type="checkbox" id="autoCheck" onclick="toggleAuto(this)"> Auto-Run next time
       </label>
     </div>
+    <br>
+    <button onclick="resetSettings()" style="background-color: #ff4444; font-size: 12px; padding: 5px 10px; margin-top: 10px;">Reset Settings</button>
   </div>
 
   <div id="status-container">
