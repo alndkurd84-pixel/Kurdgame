@@ -134,12 +134,6 @@
       stopCountdown();
     }
   }
-
-  function resetSettings() {
-    stopCountdown();
-    localStorage.clear();
-    location.reload();
-  }
 </script>
 </head>
 <body>
@@ -151,15 +145,12 @@
   </div>
 
   <div id="controls-div" class="controls">
-    <!-- ربط زر التشغيل بـ startCountdown ليعرض العد التنازلي أولاً -->
     <button onclick="startCountdown()">Run Exploit</button>
     <div class="checkbox-container">
       <label>
         <input type="checkbox" id="autoCheck" onclick="toggleAuto(this)"> Auto-Run next time
       </label>
     </div>
-    <br>
-    <button onclick="resetSettings()" style="background-color: #ff4444; font-size: 12px; padding: 5px 10px; margin-top: 10px;">Reset Settings</button>
   </div>
 
   <div id="status-container">
