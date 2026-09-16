@@ -77,24 +77,24 @@
   let activeTimer = null;
   let countdownVal = 5;
 
-  // بدء العد التنازلي مع إبقاء الأزرار ظاهرة
+  // بدء العد التنازلي سواء بالضغط على الزر أو تلقائياً
   function startCountdown() {
-    if (activeTimer) return; // منع تداخل المؤقتات لو ضغط مرتين
+    if (activeTimer) return; // منع تداخل المؤقتات
 
     var pText = document.getElementById('status-text');
     countdownVal = 5;
-    pText.innerText = "Auto-running in " + countdownVal + " seconds...";
+    pText.innerText = "Running in " + countdownVal + " seconds...";
 
     activeTimer = setInterval(function() {
       countdownVal--;
       if (countdownVal > 0) {
-        pText.innerText = "Auto-running in " + countdownVal + " seconds...";
+        pText.innerText = "Running in " + countdownVal + " seconds...";
       } else {
         clearInterval(activeTimer);
         activeTimer = null;
         pText.innerText = "Jailbreaking... Please Wait (GoldHEN)";
         
-        // إخفاء الأزرار فقط عند بدء التهكير الفعلي بعد انتهاء العداد
+        // إخفاء الأزرار فقط بعد انتهاء العد وبدء التهكير الفعلي
         var controls = document.getElementById('controls-div');
         if (controls) controls.style.display = 'none';
 
@@ -105,7 +105,7 @@
     }, 1000);
   }
 
-  // إلغاء العد التنازلي إذا أزال المستخدم الصح أو أراد الإيقاف
+  // إلغاء العد التنازلي وإعادة النص لوضعه الطبيعي
   function stopCountdown() {
     if (activeTimer) {
       clearInterval(activeTimer);
@@ -121,7 +121,6 @@
 
     if (autoRun === 'true') {
       if (checkbox) checkbox.checked = true;
-      // يبدأ العداد التلقائي مع إبقاء الأزرار مرئية ليستطيع إلغاءه متى ما أراد
       setTimeout(startCountdown, 300);
     }
   };
@@ -129,10 +128,10 @@
   function toggleAuto(element) {
     if (element.checked) {
       localStorage.setItem('autoExploit', 'true');
-      startCountdown(); // تبدأ العد التنازلي وعندها الأزرار ظاهرة يستطيع الغاءها
+      startCountdown();
     } else {
       localStorage.setItem('autoExploit', 'false');
-      stopCountdown(); // يوقف العداد فوراً لو أزال الصح
+      stopCountdown();
     }
   }
 
@@ -151,8 +150,8 @@
     <img src="IMG_1582.png" alt="Host Image">
   </div>
 
-  <!-- الأزرار ستبقى ظاهرة طوال فترة العداد التنازلي (5 ثواني) ولن تختفي إلا عند بدء التهكير الفعلي -->
   <div id="controls-div" class="controls">
+    <!-- ربط زر التشغيل بـ startCountdown ليعرض العد التنازلي أولاً -->
     <button onclick="startCountdown()">Run Exploit</button>
     <div class="checkbox-container">
       <label>
