@@ -73,16 +73,30 @@
   function undefinedFunction() {}
   window.undefinedFunction = window.undefinedFunction || function() {};
 
-  function startExploit() {
+  // دالة بدء العد التنازلي وتشغيل الثغرة بعد 5 ثوانٍ
+  function startCountdown() {
     var controls = document.getElementById('controls-div');
     if (controls) controls.style.display = 'none';
-    
-    var pText = document.getElementById('status-text');
-    if (pText) pText.innerText = "Jailbreaking... Please Wait";
 
-    var script = document.createElement('script');
-    script.src = 'exploit.js';
-    document.body.appendChild(script);
+    var pText = document.getElementById('status-text');
+    var countdown = 5;
+
+    pText.innerText = "Auto-running in " + countdown + " seconds...";
+
+    var timer = setInterval(function() {
+      countdown--;
+      if (countdown > 0) {
+        pText.innerText = "Auto-running in " + countdown + " seconds...";
+      } else {
+        clearInterval(timer);
+        pText.innerText = "Jailbreaking... Please Wait (GoldHEN)";
+        
+        // تحميل ملف الثغرة الفعلي بعد انتهاء العداد
+        var script = document.createElement('script');
+        script.src = 'exploit.js';
+        document.body.appendChild(script);
+      }
+    }, 1000);
   }
 
   window.onload = function () {
@@ -91,7 +105,8 @@
 
     if (autoRun === 'true') {
       if (checkbox) checkbox.checked = true;
-      setTimeout(startExploit, 500);
+      // إذا كان خيار التشغيل التلقائي مفعل، نبدأ العداد التنازلي فوراً
+      startCountdown();
     }
   };
 
@@ -103,7 +118,7 @@
     }
   }
 
-  // زر إضافي صغير لإعادة تعيين الإعدادات وإظهار الأزرار لو اختفت
+  // زر لإعادة التعيين إذا احتجت لإظهار الأزرار مجدداً
   function resetSettings() {
     localStorage.clear();
     location.reload();
@@ -119,7 +134,7 @@
   </div>
 
   <div id="controls-div" class="controls">
-    <button onclick="startExploit()">Run Exploit</button>
+    <button onclick="startCountdown()">Run Exploit</button>
     <div class="checkbox-container">
       <label>
         <input type="checkbox" id="autoCheck" onclick="toggleAuto(this)"> Auto-Run next time
