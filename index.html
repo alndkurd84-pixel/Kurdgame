@@ -34,21 +34,17 @@
     box-shadow: 0 0 15px rgba(0,255,213,0.3);
     object-fit: contain;
   }
-  /* تنسيق العناصر البرمجية لكي يراها السكريبت ولا تختفي */
   #status-container {
     margin-top: 10px;
     font-size: 14px;
     color: #00ffd5;
   }
-  #progress {
-    display: inline-block;
-  }
-  #mens, #all-set {
-    display: inline-block;
-    margin-left: 5px;
-  }
 </style>
 <script>
+  // دوال وهمية لمنع ظهور أخطاء مفقودة من ملفات الـ JS الأخرى
+  function undefinedFunction() {}
+  window.undefinedFunction = window.undefinedFunction || function() {};
+
   window.onload = function () {
     setTimeout(function () {
       var script = document.createElement('script');
@@ -66,7 +62,6 @@
     <img src="IMG_1582.png" alt="Host Image">
   </div>
 
-  <!-- العناصر التي يتطلبها exploit.js لتعمل الثغرة بدون أخطاء -->
   <div id="status-container">
     <span id="progress"></span>
     <span id="mens"></span>
