@@ -28,7 +28,7 @@
   img {
     width: auto;
     max-width: 90%;
-    max-height: 65vh;
+    max-height: 55vh;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0,255,213,0.3);
@@ -39,27 +39,94 @@
     font-size: 14px;
     color: #00ffd5;
   }
+  /* تنسيق الزر ومربع الاختيار ليكون شكلها جميل ومرتب */
+  .controls {
+    margin-top: 15px;
+  }
+  button {
+    background-color: #00ffd5;
+    color: #0f1015;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,255,213,0.4);
+    transition: 0.2s;
+  }
+  button:hover {
+    background-color: #00cca3;
+  }
+  .checkbox-container {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .checkbox-container input {
+    transform: scale(1.2);
+    margin-left: 5px;
+    cursor: pointer;
+  }
 </style>
 <script>
   // دوال وهمية لمنع ظهور أخطاء مفقودة من ملفات الـ JS الأخرى
   function undefinedFunction() {}
   window.undefinedFunction = window.undefinedFunction || function() {};
 
+  // دالة تشغيل الثغرة
+  function startExploit() {
+    // إخفاء الزر وخيارات التحكم عند بدء الثغرة لتبدو الصفحة نظيفة
+    var controls = document.getElementById('controls-div');
+    if (controls) controls.style.display = 'none';
+    
+    var pText = document.getElementById('status-text');
+    if (pText) pText.innerText = "Jailbreaking... Please Wait";
+
+    var script = document.createElement('script');
+    script.src = 'exploit.js';
+    document.body.appendChild(script);
+  }
+
   window.onload = function () {
-    setTimeout(function () {
-      var script = document.createElement('script');
-      script.src = 'exploit.js';
-      document.body.appendChild(script);
-    }, 500);
+    // التحقق هل المستخدم مفعل خيار التشغيل التلقائي سابقاً
+    var autoRun = localStorage.getItem('autoExploit');
+    var checkbox = document.getElementById('autoCheck');
+
+    if (autoRun === 'true') {
+      if (checkbox) checkbox.checked = true;
+      // تشغيل تلقائي بعد نصف ثانية
+      setTimeout(startExploit, 500);
+    }
   };
+
+  // دالة حفظ حالة مربع الاختيار
+  function toggleAuto(element) {
+    if (element.checked) {
+      localStorage.setItem('autoExploit', 'true');
+    } else {
+      localStorage.setItem('autoExploit', 'false');
+    }
+  }
 </script>
 </head>
 <body>
   <h1>Karo Host Auto-Exploit 9.00</h1>
-  <p>Jailbreaking... Please Wait</p>
+  <p id="status-text">Choose how to run the exploit</p>
   
   <div class="image-container">
     <img src="IMG_1582.png" alt="Host Image">
+  </div>
+
+  <!-- الأزرار وخيارات التشغيل اليدوي أو التلقائي -->
+  <div id="controls-div" class="controls">
+    <button onclick="startExploit()">Run Exploit</button>
+    <div class="checkbox-container">
+      <label>
+        <input type="checkbox" id="autoCheck" onclick="toggleAuto(this)"> Auto-Run next time
+      </label>
+    </div>
   </div>
 
   <div id="status-container">
