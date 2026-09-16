@@ -18,9 +18,10 @@
     margin-bottom: 5px;
   }
   p {
-    font-size: 16px;
+    font-size: 18px;
     color: #ffae00;
     margin-bottom: 10px;
+    font-weight: bold;
   }
   .image-container {
     margin: 0 auto;
@@ -73,8 +74,12 @@
   function undefinedFunction() {}
   window.undefinedFunction = window.undefinedFunction || function() {};
 
-  // دالة بدء العد التنازلي وتشغيل الثغرة بعد 5 ثوانٍ
+  let timerStarted = false;
+
   function startCountdown() {
+    if (timerStarted) return;
+    timerStarted = true;
+
     var controls = document.getElementById('controls-div');
     if (controls) controls.style.display = 'none';
 
@@ -91,7 +96,6 @@
         clearInterval(timer);
         pText.innerText = "Jailbreaking... Please Wait (GoldHEN)";
         
-        // تحميل ملف الثغرة الفعلي بعد انتهاء العداد
         var script = document.createElement('script');
         script.src = 'exploit.js';
         document.body.appendChild(script);
@@ -105,20 +109,21 @@
 
     if (autoRun === 'true') {
       if (checkbox) checkbox.checked = true;
-      // إذا كان خيار التشغيل التلقائي مفعل، نبدأ العداد التنازلي فوراً
-      startCountdown();
+      // تأخير بسيط جداً لضمان تحميل عناصر الصفحة ثم بدء العداد بوضوح
+      setTimeout(startCountdown, 300);
     }
   };
 
   function toggleAuto(element) {
     if (element.checked) {
       localStorage.setItem('autoExploit', 'true');
+      // إذا فعل الصح، يبدأ العداد فوراً أمام عينه
+      startCountdown();
     } else {
       localStorage.setItem('autoExploit', 'false');
     }
   }
 
-  // زر لإعادة التعيين إذا احتجت لإظهار الأزرار مجدداً
   function resetSettings() {
     localStorage.clear();
     location.reload();
