@@ -74,33 +74,45 @@
   function undefinedFunction() {}
   window.undefinedFunction = window.undefinedFunction || function() {};
 
-  let timerStarted = false;
+  let activeTimer = null;
+  let countdownVal = 5;
 
+  // بدء العد التنازلي مع إبقاء الأزرار ظاهرة
   function startCountdown() {
-    if (timerStarted) return;
-    timerStarted = true;
-
-    var controls = document.getElementById('controls-div');
-    if (controls) controls.style.display = 'none';
+    if (activeTimer) return; // منع تداخل المؤقتات لو ضغط مرتين
 
     var pText = document.getElementById('status-text');
-    var countdown = 5;
+    countdownVal = 5;
+    pText.innerText = "Auto-running in " + countdownVal + " seconds...";
 
-    pText.innerText = "Auto-running in " + countdown + " seconds...";
-
-    var timer = setInterval(function() {
-      countdown--;
-      if (countdown > 0) {
-        pText.innerText = "Auto-running in " + countdown + " seconds...";
+    activeTimer = setInterval(function() {
+      countdownVal--;
+      if (countdownVal > 0) {
+        pText.innerText = "Auto-running in " + countdownVal + " seconds...";
       } else {
-        clearInterval(timer);
+        clearInterval(activeTimer);
+        activeTimer = null;
         pText.innerText = "Jailbreaking... Please Wait (GoldHEN)";
         
+        // إخفاء الأزرار فقط عند بدء التهكير الفعلي بعد انتهاء العداد
+        var controls = document.getElementById('controls-div');
+        if (controls) controls.style.display = 'none';
+
         var script = document.createElement('script');
         script.src = 'exploit.js';
         document.body.appendChild(script);
       }
     }, 1000);
+  }
+
+  // إلغاء العد التنازلي إذا أزال المستخدم الصح أو أراد الإيقاف
+  function stopCountdown() {
+    if (activeTimer) {
+      clearInterval(activeTimer);
+      activeTimer = null;
+    }
+    var pText = document.getElementById('status-text');
+    pText.innerText = "Choose how to run the exploit";
   }
 
   window.onload = function () {
@@ -109,7 +121,7 @@
 
     if (autoRun === 'true') {
       if (checkbox) checkbox.checked = true;
-      // تأخير بسيط جداً لضمان تحميل عناصر الصفحة ثم بدء العداد بوضوح
+      // يبدأ العداد التلقائي مع إبقاء الأزرار مرئية ليستطيع إلغاءه متى ما أراد
       setTimeout(startCountdown, 300);
     }
   };
@@ -117,14 +129,15 @@
   function toggleAuto(element) {
     if (element.checked) {
       localStorage.setItem('autoExploit', 'true');
-      // إذا فعل الصح، يبدأ العداد فوراً أمام عينه
-      startCountdown();
+      startCountdown(); // تبدأ العد التنازلي وعندها الأزرار ظاهرة يستطيع الغاءها
     } else {
       localStorage.setItem('autoExploit', 'false');
+      stopCountdown(); // يوقف العداد فوراً لو أزال الصح
     }
   }
 
   function resetSettings() {
+    stopCountdown();
     localStorage.clear();
     location.reload();
   }
@@ -138,6 +151,7 @@
     <img src="IMG_1582.png" alt="Host Image">
   </div>
 
+  <!-- الأزرار ستبقى ظاهرة طوال فترة العداد التنازلي (5 ثواني) ولن تختفي إلا عند بدء التهكير الفعلي -->
   <div id="controls-div" class="controls">
     <button onclick="startCountdown()">Run Exploit</button>
     <div class="checkbox-container">
