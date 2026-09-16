@@ -10,29 +10,42 @@
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
-    padding-top: 20px;
+    padding-top: 15px;
   }
   h1 {
-    font-size: 32px;
+    font-size: 28px;
     color: #00ffd5;
     margin-bottom: 5px;
   }
   p {
-    font-size: 18px;
+    font-size: 16px;
     color: #ffae00;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   .image-container {
     margin: 0 auto;
   }
   img {
     width: auto;
-    max-width: 95%;
-    max-height: 75vh;
+    max-width: 90%;
+    max-height: 65vh;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0,255,213,0.3);
     object-fit: contain;
+  }
+  /* تنسيق العناصر البرمجية لكي يراها السكريبت ولا تختفي */
+  #status-container {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #00ffd5;
+  }
+  #progress {
+    display: inline-block;
+  }
+  #mens, #all-set {
+    display: inline-block;
+    margin-left: 5px;
   }
 </style>
 <script>
@@ -48,15 +61,16 @@
 <body>
   <h1>Karo Host Auto-Exploit 9.00</h1>
   <p>Jailbreaking... Please Wait</p>
+  
   <div class="image-container">
     <img src="IMG_1582.png" alt="Host Image">
   </div>
 
-  <!-- عناصر مخفية لمنع أخطاء JavaScript ولجعل exploit.js يعمل بشكل سليم -->
-  <div style="display: none;">
-    <div id="progress"></div>
-    <div id="mens"></div>
-    <div id="all-set"></div>
+  <!-- العناصر التي يتطلبها exploit.js لتعمل الثغرة بدون أخطاء -->
+  <div id="status-container">
+    <span id="progress"></span>
+    <span id="mens"></span>
+    <span id="all-set"></span>
   </div>
 </body>
 </html>
