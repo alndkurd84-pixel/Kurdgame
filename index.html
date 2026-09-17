@@ -71,24 +71,19 @@
     cursor: pointer;
   }
 </style>
-<!-- تعريف المتغيرات الأساسية لمنع أخطاء الـ undefined -->
+<!-- تعريف المتغيرات الوهمية لمنع ظهور أخطاء المتغيرات المفقودة -->
 <script>
-  var userland = function() {};
+  var chain = {};
+  var userland = {};
 </script>
-<!-- استدعاء ملفات التشغيل بالترتيب الصحيح -->
+<!-- استدعاء الملفات بالترتيب الصحيح -->
 <script src="exploit.js"></script>
 <script src="malloc.js"></script>
 <script src="rop.js"></script>
-<script src="kexploit-launcher.js"></script>
+<script src="syscalls.js"></script>
 <script>
   let activeTimer = null;
   let countdownVal = 5;
-
-  function allset() {
-    var pText = document.getElementById('status-text');
-    pText.innerText = "GoldHEN Loaded Successfully!";
-    document.getElementById('progress').innerHTML = "All Set !";
-  }
 
   function startCountdown() {
     if (activeTimer) return;
@@ -109,21 +104,9 @@
         var controls = document.getElementById('controls-div');
         if (controls) controls.style.display = 'none';
 
+        // محاولة الانتقال الآمن لملف jb.html بعد تهيئة الصفحة
         setTimeout(function() {
-          try {
-            if (typeof run_exploit === 'function') {
-              run_exploit();
-            } else if (typeof go === 'function') {
-              go();
-            } else {
-              // تشغيل ملف الـ jb في حال الاعتماد عليه
-              var s = document.createElement('script');
-              s.src = 'jb.html';
-              document.body.appendChild(s);
-            }
-          } catch(e) {
-            document.getElementById('status-text').innerText = "Error: " + e.message;
-          }
+          window.location.href = "jb.html";
         }, 500);
       }
     }, 1000);
