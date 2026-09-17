@@ -1,76 +1,163 @@
-<html manifest="Cache.manifest">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="utf-8" />
-<title>PS4 9.00 Jailbreak by ChendoChap</title>
-<link rel="shortcut icon" href="favicon.ico"></link>
+<title>Kurd Game 🔥 9.00</title>
+<meta charset="utf-8">
+<style>
+  body {
+    background-color: #0f1015;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding-top: 15px;
+  }
+  h1 {
+    font-size: 28px;
+    color: #00ffd5;
+    margin-bottom: 5px;
+  }
+  p {
+    font-size: 18px;
+    color: #ffae00;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .image-container {
+    width: 95%;
+    max-width: 950px;
+    margin: 0 auto;
+  }
+  img {
+    width: 100%;
+    height: auto;
+    max-height: 65vh;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,255,213,0.3);
+    object-fit: contain;
+  }
+  #status-container {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #00ffd5;
+  }
+  .controls {
+    margin-top: 15px;
+  }
+  button {
+    background-color: #00ffd5;
+    color: #0f1015;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,255,213,0.4);
+    transition: 0.2s;
+  }
+  button:hover {
+    background-color: #00cca3;
+  }
+  .checkbox-container {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .checkbox-container input {
+    transform: scale(1.2);
+    margin-left: 5px;
+    cursor: pointer;
+  }
+</style>
+<script>
+  function undefinedFunction() {}
+  window.undefinedFunction = window.undefinedFunction || function() {};
+
+  let activeTimer = null;
+  let countdownVal = 5;
+
+  // بدء العد التنازلي سواء بالضغط على الزر أو تلقائياً
+  function startCountdown() {
+    if (activeTimer) return; // منع تداخل المؤقتات
+
+    var pText = document.getElementById('status-text');
+    countdownVal = 5;
+    pText.innerText = "Running in " + countdownVal + " seconds...";
+
+    activeTimer = setInterval(function() {
+      countdownVal--;
+      if (countdownVal > 0) {
+        pText.innerText = "Running in " + countdownVal + " seconds...";
+      } else {
+        clearInterval(activeTimer);
+        activeTimer = null;
+        pText.innerText = "Jailbreaking... Please Wait (GoldHEN)";
+        
+        // إخفاء الأزرار فقط بعد انتهاء العد وبدء التهكير الفعلي
+        var controls = document.getElementById('controls-div');
+        if (controls) controls.style.display = 'none';
+
+        var script = document.createElement('script');
+        script.src = 'exploit.js';
+        document.body.appendChild(script);
+      }
+    }, 1000);
+  }
+
+  // إلغاء العد التنازلي وإعادة النص لوضعه الطبيعي
+  function stopCountdown() {
+    if (activeTimer) {
+      clearInterval(activeTimer);
+      activeTimer = null;
+    }
+    var pText = document.getElementById('status-text');
+    pText.innerText = "Press The Start Button";
+  }
+
+  window.onload = function () {
+    var autoRun = localStorage.getItem('autoExploit');
+    var checkbox = document.getElementById('autoCheck');
+
+    if (autoRun === 'true') {
+      if (checkbox) checkbox.checked = true;
+      setTimeout(startCountdown, 300);
+    }
+  };
+
+  function toggleAuto(element) {
+    if (element.checked) {
+      localStorage.setItem('autoExploit', 'true');
+      startCountdown();
+    } else {
+      localStorage.setItem('autoExploit', 'false');
+      stopCountdown();
+    }
+  }
+</script>
 </head>
 <body>
-<script>
-window.applicationCache.ondownloading = function()
-{
-    alert("Caching started !!");
-};
+  <h1>Kurd Game 🔥 9.00</h1>
+  <p id="status-text">Press The Start Button</p>
+  
+  <div class="image-container">
+    <img src="IMG_1582.png" alt="Host Image">
+  </div>
 
-window.applicationCache.onprogress = function(a)
-{
-    document.getElementById("progress").innerHTML="<h3>Caching Status: "+(Math.round(100*(a.loaded/a.total)))+"% Completed</h3>";
-};
+  <div id="controls-div" class="controls">
+    <button onclick="startCountdown()">Start</button>
+    <div class="checkbox-container">
+      <label>
+        <input type="checkbox" id="autoCheck" onclick="toggleAuto(this)"> Auto-Run next time
+      </label>
+    </div>
+  </div>
 
-window.applicationCache.oncached = window.applicationCache.onupdateready = function()
-{
-    alert("Page Cached!!");
-};
-</script>
-<script>
-// Init on English Language
-changeLanguage('english')
-
-function changeLanguage(lang) {
-    Array.from(document.querySelectorAll('.language')).map( element => {
-        element.style.display = 'none'
-    });
-    if (document.getElementById(lang)) {
-        document.getElementById(lang).style.display = 'block';
-    }
-}
-</script>
-<p>
-<div id="english" class="language">
-<fieldset>
-<legend>README</legend>
-<div style="font-size:17px;text-align:left;">
-READ THIS CAREFULLY BEFORE PROCEEDING<br>
-<br>
-In case you're dumb: this ONLY works on FW 9.00; if you are on 6.72 or lower, go <a href="https://ctsu.github.io/672/" style="color: #4385f5;">here</a>. If you are on 7.00-7.55, go <a href="https://ctsu.github.io/755/" style="color: #4385f5;">here</a>. If you are on 7.50-7.55, go <a href="https://ctsu.github.io/755-755/" style="color: #4385f5;">here</a>. If you are on a higher firmware your console CAN'T BE HACKED yet.<br>
-<br>
-1. Flash this image onto a USB drive. You can use the "Etcher" program (download here) to perform the flashing. Note: this will erase your USB drive, and you will NOT be able to use it for anything else. It will become a jailbreaking dongle ONLY.<br>
-2. Click on the link that says JB+MIRA or JB+HEN, depending on your personal habits. In about a minute you'll be prompted to insert the USB drive you prepared. Insert the USB drive, wait for the notification about the invalid format to pop up, then eject the drive and click OK. Important: never leave the drive inserted during a reboot!<br>
-3. You will get a message saying "There is not enough free system memory". This is normal, just click OK.<br>
-4. After 20 more seconds you will get an alert saying "You're all set!", followed by "There is not enough free system memory" message without any pop-ups, then it means that the webkit exploit has failed. Click OK and retry. If using the webkit, the screen will go dark for a dozen of seconds.<br>
-If something went wrong during the process, you may get an alert with an error. In this case you must reboot your PS4, preferably without closing the dialog box.<br>
-If the system hangs for more than a minute (may require more time on slow internet connections), reboot your PS4 and try again.<br>
-If the system crashes (looks like instant powerdown), press the power button on the PS4 (NOT on the gamepad) until it turns on again, then retry.<br>
-5. If you get a "There is not enough free system memory" message without any pop-ups, then it means that the webkit exploit has failed. Click OK and retry. This is not going to brick your console.<br>
-6. For advanced users: To load your own payloads using NetCat, run JB+NETCAT and send the payload to TCP port 9021/9020 for the legacy version.<br>
-<br>
-This exploit does crash and hang. Sometimes you even have to retry 10 times to get the jailbreak.<br>
-Credits: @ChendoChap for kernel exploit (both the vulnerability and the implementation), Google Project Zero for WebKit vulnerability<br>
-</div>
-</fieldset>
-</div>
-<script src="frontend.js"></script>
-<h1 id="progress">Caching Status: 0% Completed</h1>
-<hr>
-<div>
-<button class="btn" onclick="load_jb()">JB+MIRA</button>
-<button class="btn" onclick="load_jb_netcat()">JB+NETCAT</button>
-<button class="btn" onclick="load_jb_fakeusb()">JB+FAKEUSB</button>
-<button class="btn" onclick="load_netcat_legacy()">JB+NETCAT(LEGACY)</button>
-</div>
-<div id="goldhens" style="margin-top:10px">
-</div>
-<div id="payloads" style="margin-top:10px">
-</div>
-<script src="exploit.js"></script>
+  <div id="status-container">
+    <span id="progress"></span>
+    <span id="mens"></span>
+    <span id="all-set"></span>
+  </div>
 </body>
 </html>
