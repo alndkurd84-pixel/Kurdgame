@@ -71,19 +71,9 @@
     cursor: pointer;
   }
 </style>
-<script src="exploit.js"></script>
-<script src="malloc.js"></script>
-<script src="rop.js"></script>
-<script src="syscalls.js"></script>
 <script>
   let activeTimer = null;
   let countdownVal = 5;
-
-  function allset() {
-    var pText = document.getElementById('status-text');
-    pText.innerText = "GoldHEN Loaded Successfully!";
-    document.getElementById('progress').innerHTML = "All Set !";
-  }
 
   function startCountdown() {
     if (activeTimer) return;
@@ -104,24 +94,9 @@
         var controls = document.getElementById('controls-div');
         if (controls) controls.style.display = 'none';
 
+        // الانتقال مباشرة إلى ملف jb.html المسؤول عن تشغيل النواة والثغرة كاملة
         setTimeout(function() {
-          try {
-            // استخدام طريقة التشغيل الآمنة المتوافقة مع ملفات الـ 9.00
-            if (typeof jb === 'function') {
-              jb();
-            } else if (typeof go === 'function') {
-              go();
-            } else if (typeof run_exploit === 'function') {
-              run_exploit();
-            } else {
-              // تحميل ملف الـ jb الفرعي إذا لم تكن الدالة معرفة مباشرة
-              var s = document.createElement('script');
-              s.src = 'jb.html';
-              document.body.appendChild(s);
-            }
-          } catch(e) {
-            document.getElementById('status-text').innerText = "Error: " + e.message;
-          }
+          window.location.href = "jb.html";
         }, 500);
       }
     }, 1000);
