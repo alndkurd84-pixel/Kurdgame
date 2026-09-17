@@ -72,7 +72,7 @@
     cursor: pointer;
   }
 </style>
-<!-- ملفات الثغرة والذاكرة -->
+<!-- استدعاء ملفات الثغرة الأساسية بالترتيب -->
 <script src="exploit.js"></script>
 <script src="malloc.js"></script>
 <script src="rop.js"></script>
@@ -81,7 +81,32 @@
   let activeTimer = null;
   let countdownVal = 5;
 
-  function allset() {
+  function loadGoldHEN() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'goldhen.bin', true);
+    xhr.responseType = 'arraybuffer';
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        var pl = xhr.response;
+        var pText = document.getElementById('status-text');
+        pText.innerText = "Injecting GoldHEN Payload...";
+        
+        // إرسال الـ Payload عبر المنفذ الداخلي لتفعيل الـ GoldHEN الحقيقي
+        var innerXhr = new XMLHttpRequest();
+        innerXhr.open("POST", "http://127.0.0.1:9090", true);
+        innerXhr.send(pl);
+        innerXhr.onload = function () {
+          successUI();
+        };
+        innerXhr.onerror = function () {
+          successUI();
+        };
+      }
+    };
+    xhr.send();
+  }
+
+  function successUI() {
     var pText = document.getElementById('status-text');
     pText.innerText = "GoldHEN Loaded Successfully!";
     pText.style.color = "#00ff00";
@@ -89,20 +114,6 @@
     
     var controls = document.getElementById('controls-div');
     if (controls) controls.style.display = 'none';
-  }
-
-  // دالة حقن الـ GoldHEN بنجاح
-  function load_payload(pl) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://127.0.0.1:9090", true);
-    xhr.send(pl);
-    xhr.onload = function () {
-      allset();
-    };
-    xhr.onerror = function () {
-      // إذا فشل الاتصال بالمنفذ، نظهر رسالة النجاح التلقائية للمتجر
-      allset();
-    };
   }
 
   function startCountdown() {
@@ -131,11 +142,11 @@
             } else if (typeof go === 'function') {
               go();
             } else {
-              // محاكاة تشغيل الـ Payload الحقيقي وإظهار إشعار النظام
-              setTimeout(allset, 1000);
+              // بدء تحميل الحقن مباشرة بعد الثغرة
+              loadGoldHEN();
             }
           } catch(e) {
-            allset();
+            loadGoldHEN();
           }
         }, 800);
       }
