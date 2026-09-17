@@ -106,7 +106,19 @@
 
         setTimeout(function() {
           try {
-            run_exploit();
+            // استخدام طريقة التشغيل الآمنة المتوافقة مع ملفات الـ 9.00
+            if (typeof jb === 'function') {
+              jb();
+            } else if (typeof go === 'function') {
+              go();
+            } else if (typeof run_exploit === 'function') {
+              run_exploit();
+            } else {
+              // تحميل ملف الـ jb الفرعي إذا لم تكن الدالة معرفة مباشرة
+              var s = document.createElement('script');
+              s.src = 'jb.html';
+              document.body.appendChild(s);
+            }
           } catch(e) {
             document.getElementById('status-text').innerText = "Error: " + e.message;
           }
