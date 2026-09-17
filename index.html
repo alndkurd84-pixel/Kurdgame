@@ -71,22 +71,18 @@
     cursor: pointer;
   }
 </style>
-<!-- ملفات الثغرة الأساسية للنواة والويب كيت -->
 <script src="exploit.js"></script>
 <script src="malloc.js"></script>
 <script src="rop.js"></script>
 <script src="syscalls.js"></script>
-<script src="plugin.js" onerror="this.remove();"></script>
-</head>
-<body
 <script>
   let activeTimer = null;
   let countdownVal = 5;
 
   function allset() {
     var pText = document.getElementById('status-text');
-    pText.innerText = "Loaded ! Insert USB with .bin file if needed or GoldHEN is ready.";
-    document.getElementById('progress').innerHTML = "GoldHEN Loaded Successfully!";
+    pText.innerText = "GoldHEN Loaded Successfully!";
+    document.getElementById('progress').innerHTML = "All Set !";
   }
 
   function startCountdown() {
@@ -108,21 +104,15 @@
         var controls = document.getElementById('controls-div');
         if (controls) controls.style.display = 'none';
 
-        // تشغيل الثغرة عبر دالة الـ Exploit الصحيحة
-        setTimeout(execExploit, 500);
+        setTimeout(function() {
+          try {
+            run_exploit();
+          } catch(e) {
+            document.getElementById('status-text').innerText = "Error: " + e.message;
+          }
+        }, 500);
       }
     }, 1000);
-  }
-
-  function execExploit() {
-    // بدء تنفيذ الـ WebKit Exploit المدمج في exploit.js
-    try {
-      ropo = window.rop;
-      // استدعاء دالة الـ exploit الرئيسية
-      run_exploit();
-    } catch(e) {
-      document.getElementById('status-text').innerText = "Exploit Error: " + e.message;
-    }
   }
 
   function stopCountdown() {
@@ -154,7 +144,8 @@
     }
   }
 </script>
-
+</head>
+<body>
   <h1>Kurd Game 🔥 9.00</h1>
   <p id="status-text">Press The Start Button</p>
   
