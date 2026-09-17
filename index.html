@@ -71,9 +71,24 @@
     cursor: pointer;
   }
 </style>
+<!-- تعريف المتغيرات الأساسية لمنع أخطاء الـ undefined -->
+<script>
+  var userland = function() {};
+</script>
+<!-- استدعاء ملفات التشغيل بالترتيب الصحيح -->
+<script src="exploit.js"></script>
+<script src="malloc.js"></script>
+<script src="rop.js"></script>
+<script src="kexploit-launcher.js"></script>
 <script>
   let activeTimer = null;
   let countdownVal = 5;
+
+  function allset() {
+    var pText = document.getElementById('status-text');
+    pText.innerText = "GoldHEN Loaded Successfully!";
+    document.getElementById('progress').innerHTML = "All Set !";
+  }
 
   function startCountdown() {
     if (activeTimer) return;
@@ -94,9 +109,21 @@
         var controls = document.getElementById('controls-div');
         if (controls) controls.style.display = 'none';
 
-        // الانتقال مباشرة إلى ملف jb.html المسؤول عن تشغيل النواة والثغرة كاملة
         setTimeout(function() {
-          window.location.href = "jb.html";
+          try {
+            if (typeof run_exploit === 'function') {
+              run_exploit();
+            } else if (typeof go === 'function') {
+              go();
+            } else {
+              // تشغيل ملف الـ jb في حال الاعتماد عليه
+              var s = document.createElement('script');
+              s.src = 'jb.html';
+              document.body.appendChild(s);
+            }
+          } catch(e) {
+            document.getElementById('status-text').innerText = "Error: " + e.message;
+          }
         }, 500);
       }
     }, 1000);
