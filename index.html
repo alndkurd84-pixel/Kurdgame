@@ -71,12 +71,7 @@
     cursor: pointer;
   }
 </style>
-<!-- تعريف المتغيرات الوهمية لمنع ظهور أخطاء المتغيرات المفقودة -->
-<script>
-  var chain = {};
-  var userland = {};
-</script>
-<!-- استدعاء الملفات بالترتيب الصحيح -->
+<!-- استدعاء ملفات الثغرة الأساسية بالترتيب الصحيح -->
 <script src="exploit.js"></script>
 <script src="malloc.js"></script>
 <script src="rop.js"></script>
@@ -84,6 +79,12 @@
 <script>
   let activeTimer = null;
   let countdownVal = 5;
+
+  function allset() {
+    var pText = document.getElementById('status-text');
+    pText.innerText = "GoldHEN Loaded Successfully!";
+    document.getElementById('progress').innerHTML = "All Set !";
+  }
 
   function startCountdown() {
     if (activeTimer) return;
@@ -104,9 +105,21 @@
         var controls = document.getElementById('controls-div');
         if (controls) controls.style.display = 'none';
 
-        // محاولة الانتقال الآمن لملف jb.html بعد تهيئة الصفحة
+        // تشغيل دالة الـ exploit مباشرة بدون الانتقال لملف خارجي يسبب أخطاء
         setTimeout(function() {
-          window.location.href = "jb.html";
+          try {
+            if (typeof run_exploit === 'function') {
+              run_exploit();
+            } else if (typeof go === 'function') {
+              go();
+            } else if (typeof payload === 'function') {
+              payload();
+            } else {
+              pText.innerText = "Exploit loaded. Please insert USB if prompted.";
+            }
+          } catch(e) {
+            document.getElementById('status-text').innerText = "Error: " + e.message;
+          }
         }, 500);
       }
     }, 1000);
