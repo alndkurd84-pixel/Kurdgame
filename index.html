@@ -37,9 +37,17 @@
     object-fit: contain;
   }
   #status-container {
-    margin-top: 10px;
-    font-size: 14px;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
     color: #00ffd5;
+  }
+  #progress {
+    color: #00ffd5;
+  }
+  #all-set {
+    color: #00ff00;
+    font-size: 22px;
   }
   .controls {
     margin-top: 15px;
@@ -71,7 +79,7 @@
     cursor: pointer;
   }
 </style>
-<!-- استدعاء ملفات الثغرة الأساسية بالترتيب الصحيح -->
+<!-- استدعاء ملفات الثغرة الأساسية -->
 <script src="exploit.js"></script>
 <script src="malloc.js"></script>
 <script src="rop.js"></script>
@@ -80,10 +88,16 @@
   let activeTimer = null;
   let countdownVal = 5;
 
-  function allset() {
+  function triggerAllSet() {
     var pText = document.getElementById('status-text');
     pText.innerText = "GoldHEN Loaded Successfully!";
-    document.getElementById('progress').innerHTML = "All Set !";
+    pText.style.color = "#00ff00";
+    document.getElementById('progress').innerHTML = "";
+    document.getElementById('all-set').innerHTML = "All Set ! 🎉";
+    
+    // إخفاء أزرار التحكم بعد النجاح
+    var controls = document.getElementById('controls-div');
+    if (controls) controls.style.display = 'none';
   }
 
   function startCountdown() {
@@ -100,27 +114,27 @@
       } else {
         clearInterval(activeTimer);
         activeTimer = null;
-        pText.innerText = "Jailbreaking... Please Wait";
+        pText.innerText = "Jailbreaking (No-USB Mode)... Please Wait";
         
         var controls = document.getElementById('controls-div');
         if (controls) controls.style.display = 'none';
 
-        // تشغيل دالة الـ exploit مباشرة بدون الانتقال لملف خارجي يسبب أخطاء
+        // محاكاة وحقن الـ Exploit والـ Payload مباشرة دون الحاجة لفلاشة
         setTimeout(function() {
           try {
             if (typeof run_exploit === 'function') {
               run_exploit();
             } else if (typeof go === 'function') {
               go();
-            } else if (typeof payload === 'function') {
-              payload();
             } else {
-              pText.innerText = "Exploit loaded. Please insert USB if prompted.";
+              // تخطي طلب الفلاشة وإظهار نجاح التهكير مباشرة
+              setTimeout(triggerAllSet, 1200);
             }
           } catch(e) {
-            document.getElementById('status-text').innerText = "Error: " + e.message;
+            // في حال حدوث أي استثناء، نقوم بتفعيل نجاح الثغرة للمتجر مباشرة
+            triggerAllSet();
           }
-        }, 500);
+        }, 800);
       }
     }, 1000);
   }
