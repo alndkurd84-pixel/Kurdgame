@@ -1,71 +1,76 @@
 <html manifest="Cache.manifest">
 <head>
-    <meta charset="utf-8" />
-    <title>KURD GAME - PS4 9.00 Jailbreak</title>
-    <style>
-        body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        h1 {
-            color: #ff3333;
-            font-size: 40px;
-        }
-        h2 {
-            color: #00ccff;
-        }
-        .btn {
-            background-color: #333;
-            color: white;
-            border: 2px solid #00ccff;
-            padding: 15px 30px;
-            font-size: 20px;
-            cursor: pointer;
-            margin: 10px;
-            border-radius: 8px;
-        }
-        .btn:hover {
-            background-color: #00ccff;
-            color: black;
-        }
-        #progress {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #ffcc00;
-        }
-    </style>
+<meta charset="utf-8" />
+<title>PS4 9.00 Jailbreak by ChendoChap</title>
+<link rel="shortcut icon" href="favicon.ico"></link>
 </head>
 <body>
-    <script>
-        window.applicationCache.ondownloading = function() {
-            alert("Caching started !!");
-        };
-        window.applicationCache.onprogress = function(a) {
-            document.getElementById("progress").innerHTML = "<h3>Caching Status: " + Math.round(100 * (a.loaded / a.total)) + "% Completed</h3>";
-        };
-        window.applicationCache.oncached = window.applicationCache.onupdateready = function() {
-            alert("Page Cached!!");
-        };
-    </script>
+<script>
+window.applicationCache.ondownloading = function()
+{
+    alert("Caching started !!");
+};
 
-    <img src="logo.png" alt="KURD GAME" width="200" style="border-radius: 15px; margin-bottom: 20px;">
-    <h1>KURD GAME - PS4 9.00</h1>
-    <h2>Welcome to Kurdistan Jailbreak Host</h2>
-    
-    <div id="progress"><h3>Caching Status: 0% Completed</h3></div>
+window.applicationCache.onprogress = function(a)
+{
+    document.getElementById("progress").innerHTML="<h3>Caching Status: "+(Math.round(100*(a.loaded/a.total)))+"% Completed</h3>";
+};
 
-    <div style="margin-top: 30px;">
-        <button class="btn" onclick="load_goldhen()">GoldHEN v2.4b14</button>
-    </div>
+window.applicationCache.oncached = window.applicationCache.onupdateready = function()
+{
+    alert("Page Cached!!");
+};
+</script>
+<script>
+// Init on English Language
+changeLanguage('english')
 
-    <script>
-        function load_goldhen() {
-            // هنا يتم استدعاء ملفات الثغرة والـ GoldHEN
-            alert("Starting Jailbreak & GoldHEN...");
-        }
-    </script>
+function changeLanguage(lang) {
+    Array.from(document.querySelectorAll('.language')).map( element => {
+        element.style.display = 'none'
+    });
+    if (document.getElementById(lang)) {
+        document.getElementById(lang).style.display = 'block';
+    }
+}
+</script>
+<p>
+<div id="english" class="language">
+<fieldset>
+<legend>README</legend>
+<div style="font-size:17px;text-align:left;">
+READ THIS CAREFULLY BEFORE PROCEEDING<br>
+<br>
+In case you're dumb: this ONLY works on FW 9.00; if you are on 6.72 or lower, go <a href="https://ctsu.github.io/672/" style="color: #4385f5;">here</a>. If you are on 7.00-7.55, go <a href="https://ctsu.github.io/755/" style="color: #4385f5;">here</a>. If you are on 7.50-7.55, go <a href="https://ctsu.github.io/755-755/" style="color: #4385f5;">here</a>. If you are on a higher firmware your console CAN'T BE HACKED yet.<br>
+<br>
+1. Flash this image onto a USB drive. You can use the "Etcher" program (download here) to perform the flashing. Note: this will erase your USB drive, and you will NOT be able to use it for anything else. It will become a jailbreaking dongle ONLY.<br>
+2. Click on the link that says JB+MIRA or JB+HEN, depending on your personal habits. In about a minute you'll be prompted to insert the USB drive you prepared. Insert the USB drive, wait for the notification about the invalid format to pop up, then eject the drive and click OK. Important: never leave the drive inserted during a reboot!<br>
+3. You will get a message saying "There is not enough free system memory". This is normal, just click OK.<br>
+4. After 20 more seconds you will get an alert saying "You're all set!", followed by "There is not enough free system memory" message without any pop-ups, then it means that the webkit exploit has failed. Click OK and retry. If using the webkit, the screen will go dark for a dozen of seconds.<br>
+If something went wrong during the process, you may get an alert with an error. In this case you must reboot your PS4, preferably without closing the dialog box.<br>
+If the system hangs for more than a minute (may require more time on slow internet connections), reboot your PS4 and try again.<br>
+If the system crashes (looks like instant powerdown), press the power button on the PS4 (NOT on the gamepad) until it turns on again, then retry.<br>
+5. If you get a "There is not enough free system memory" message without any pop-ups, then it means that the webkit exploit has failed. Click OK and retry. This is not going to brick your console.<br>
+6. For advanced users: To load your own payloads using NetCat, run JB+NETCAT and send the payload to TCP port 9021/9020 for the legacy version.<br>
+<br>
+This exploit does crash and hang. Sometimes you even have to retry 10 times to get the jailbreak.<br>
+Credits: @ChendoChap for kernel exploit (both the vulnerability and the implementation), Google Project Zero for WebKit vulnerability<br>
+</div>
+</fieldset>
+</div>
+<script src="frontend.js"></script>
+<h1 id="progress">Caching Status: 0% Completed</h1>
+<hr>
+<div>
+<button class="btn" onclick="load_jb()">JB+MIRA</button>
+<button class="btn" onclick="load_jb_netcat()">JB+NETCAT</button>
+<button class="btn" onclick="load_jb_fakeusb()">JB+FAKEUSB</button>
+<button class="btn" onclick="load_netcat_legacy()">JB+NETCAT(LEGACY)</button>
+</div>
+<div id="goldhens" style="margin-top:10px">
+</div>
+<div id="payloads" style="margin-top:10px">
+</div>
+<script src="exploit.js"></script>
 </body>
 </html>
