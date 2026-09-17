@@ -113,7 +113,7 @@
       activeTimer = null;
     }
     var pText = document.getElementById('status-text');
-    pText.innerText = "Choose how to run the exploit";
+    pText.innerText = "Press The Start Button";
   }
 
   window.onload = function () {
@@ -139,7 +139,7 @@
 </head>
 <body>
   <h1>Kurd Game 🔥 9.00</h1>
-  <p id="status-text">Choose how to run the exploit</p>
+  <p id="status-text">Press The Start Button</p>
   
   <div class="image-container">
     <img src="IMG_1582.png" alt="Host Image">
@@ -149,7 +149,7 @@
     <button onclick="startCountdown()">Start</button>
     <div class="checkbox-container">
       <label>
-        <input type="checkbox" id="autoCheck" onclick="toggleAuto(this)"> Auto-Run next time
+        <input type="checkbox" id="autoCheck" onclick="toggleOutput ? null : toggleAuto(this)"> Auto-Run next time
       </label>
     </div>
   </div>
