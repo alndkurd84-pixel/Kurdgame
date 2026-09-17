@@ -1,26 +1,16 @@
-CACHE MANIFEST
-# v9.00-KurdGame-Fixed
+CACHE MANIFEST 
 
-CACHE:
+CACHE: 
 cache.html
-index.html
-payload.html
 Cache.manifest
 exploit.js
-malloc.js
-rop.js
 goldhen.bin
-netcat.js
-ftp.js
-fakeusb.js
-jb.html
+index.html
 int64.js
 kexploit.js
-kexploit-launcher.js
-syscalls.js
-syscalls2.js
-relocator.js
-IMG_1582.png
+rop.js
 
-NETWORK:
-*
+NETWORK: 
+* 
+
+# 2024-06-16 14:22:30
